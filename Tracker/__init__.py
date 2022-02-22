@@ -47,6 +47,6 @@ def innit():
               Row4 TEXT,
               Row5 TEXT,
               Row6 TEXT,
-              PRIMARY KEY (WordleID, UserID),
               FOREIGN KEY (WordleID) REFERENCES WordleWords(WordleID),
               FOREIGN KEY (UserID) REFERENCES Accounts(UserID))""")
+    #PRIMARY KEY (WordleID,UserID)

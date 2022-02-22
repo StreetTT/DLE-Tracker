@@ -7,15 +7,11 @@ def NewSection():
     print("---")
     sleep(1.2)
 
-def Setup():
-    SQLComand("""CREATE TABLE IF NOT EXISTS Accounts (
-      UserID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      FName TEXT NOT NULL,
-      Username TEXT NOT NULL,
-      Pin TEXT NOT NULL,
-      Phrase TEXT NOT NULL,
-      LastLogin TEXT)""")
-
+def FileComand(txtfile):
+    f = open(txtfile, "r")
+    output = f.read()
+    f.close()
+    return output
 
 def OpeningMenu():  #The Main Menu
     opt = 0
@@ -142,19 +138,43 @@ def LogIn():
     return userID
 
 
-def AddDleData():
-    print("Paste the share message here:")
-    dle = input()
-    dle = (dle.split("\n")).remove("")
-    dle[0] = dle[0].split(" ")
-    if dle[0][1] == "Wordle":
-        pass
-        
+def AddDleData(User):
+    if User == None:
+        print("You must be logged in")
+    else:
+        dle = FileComand("PasteHere.txt")
+        dle = dle.split("\n")
+        dle[0] = dle[0].split(" ")
+        dle.pop(1)
+        dle[0][2] = dle[0][2].strip("/6")
+        if dle[0][2] == "X":
+            guessed = False
+            dle[0][2] = 6
+        else:
+            guessed = True
+        if dle[0][0] == "Wordle":
+            SQLComand(
+            """INSERT INTO WordleData(WordleID,UserID,Guessed,Guesses,Row1)
+                  VALUES (:WordleID,:UserID,:Guessed,:Guesses,:Row1)""", {
+                "WordleID": int(dle[0][1]),
+                "UserID": User,
+                "Guessed": guessed,
+                "Guesses": dle[0][2],
+                "Row1": dle[1]
+            })
+            for i in range((int(dle[0][2]) - 1)):
+                try:
+                    command = """UPDATE Accounts
+                              SET Row<> = :row
+                              WHERE WordleID = :WordleID AND UserID = :UserID"""
+                    command = command.replace("<>",str(i+2))
+                    SQLComand(command, {"WordleID": dle[0][1],"UserID": User, "row": dle[i+2]})#THIS DOESNT WORK. SLEEP ON IT
+                except:
+                    print("e")
 
 OpeningSelection = -1
 LoggedInUserID = None
 print("***Welcome to Bow's DLE Tracker***")
-Setup()
 NewSection()
 while OpeningSelection != 6:
     if LoggedInUserID == None:
@@ -167,7 +187,7 @@ while OpeningSelection != 6:
     elif OpeningSelection == 2:
         LoggedInUserID = LogIn()  #Log in
     elif OpeningSelection == 3:
-        pass  #Add Dle Data
+        AddDleData(LoggedInUserID)  #Add Dle Data
     elif OpeningSelection == 4:
         pass  #Veiw Data
     elif OpeningSelection == 5:

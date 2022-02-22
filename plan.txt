@@ -2,6 +2,12 @@
     - if not logged in
         - create/login
     - paste data, aves under ur acc
+Wordle 248 4/6
+
+⬛⬛⬛⬛🟨
+🟨🟨🟨⬛🟨
+🟩🟩🟨🟨⬛
+🟩🟩🟩🟩🟩
         - date 
         - Type
         - each row
