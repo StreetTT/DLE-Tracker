@@ -1,74 +1,11 @@
 from datetime import datetime as dt
 from time import sleep
-import sqlite3 as sql
-
-
-class Dle():
-    def __innit__(self):
-        self.Type = ""
-        self.Num = 0
-        self.Score = ""
-        self.Date = dt.now()
-        self.Ans = ""
-        self.Dle = []
-
-    def getType(self):
-        return self.Type
-
-    def setType(self, t):
-        self.Type = t
-
-    def getNum(self):
-        return self.Num
-
-    def setNum(self, num):
-        self.Num = num
-
-    def getScore(self):
-        return self.Score
-
-    def setScore(self, score):
-        self.Score = score
-
-    def getDle(self):
-        return self.Dle
-
-    def setDle(self, dle):
-        self.Dle = dle
-
-    def getAns(self):
-        return self.Ans
-
-    def setAns(self, Ans):
-        self.Name = Ans
-
-    def getDate(self):
-        return self.Datw
-
-    def setDate(self, d):
-        self.Date = d
-
+from Tracker import SQLComand,innit
+innit()
 
 def NewSection():
     print("---")
     sleep(1.2)
-
-
-def SQLComand(comannd, variables=None):
-    conn = sql.connect("DLE.db")
-    c = conn.cursor()
-    if variables == None:
-        c.execute(comannd)
-    else:
-        c.execute(comannd, variables)
-    output = c.fetchall()
-    conn.commit()
-    conn.close()
-    if c == None:
-        return
-    else:
-        return output
-
 
 def Setup():
     SQLComand("""CREATE TABLE IF NOT EXISTS Accounts (
@@ -186,7 +123,7 @@ def LogIn():
     while validPassword == False:
         inputPin = input("Pin:  ")
         sleep(1.2)
-        if username == "x":
+        if inputPin == "x":
             print("Hint: " + phrase)
         else:
             if inputPin != checkedPin:
@@ -205,17 +142,14 @@ def LogIn():
     return userID
 
 
-"""def StringToDLE(string):
-    string = string.split("\n")
-    DLE = Dle()
-    DLE.setType(t)"""
-
-
 def AddDleData():
     print("Paste the share message here:")
     dle = input()
-    #dle = StringToDLE(dle)
-
+    dle = (dle.split("\n")).remove("")
+    dle[0] = dle[0].split(" ")
+    if dle[0][1] == "Wordle":
+        pass
+        
 
 OpeningSelection = -1
 LoggedInUserID = None
