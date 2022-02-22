@@ -1,0 +1,41 @@
+- Create an account, 
+    - Username
+    - pin
+    - pin hint
+    - name 
+- Log In
+    - self explanatory, 
+    - forgot passord, 
+        - uses hint
+    - forgot Username
+        - contact admin
+    - Logs last login
+- Log LDE
+    - if not logged in
+        - create/login
+    - paste data, aves under ur acc
+        - date 
+        - Type
+        - each row
+        - score (out of 6)
+        - number
+        - the wor/ner -dle it self (if i can screan scrape it better)
+- View data
+    - check your account
+        - played, guessed ratio 
+        - distribution
+        - streak
+        - played today?
+            - would you like to be redireted?
+    - compare against other account
+        - enter username, 
+        - Direct comparison of above stats
+        - xbox style
+    - Check by dle
+        - ranks everyone whos done the dle by guess 
+        - if you guessed in 1, first....
+- Log out
+
+
+eventualy, 
+- accepsts request online from a website
