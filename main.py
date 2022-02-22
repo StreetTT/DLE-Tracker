@@ -48,9 +48,11 @@ class Dle():
     def setDate(self, d):
         self.Date = d
 
+
 def NewSection():
     print("---")
     sleep(1.2)
+
 
 def SQLComand(comannd, variables=None):
     conn = sql.connect("DLE.db")
@@ -76,6 +78,7 @@ def Setup():
       Pin TEXT NOT NULL,
       Phrase TEXT NOT NULL,
       LastLogin TEXT)""")
+
 
 def OpeningMenu():  #The Main Menu
     opt = 0
@@ -144,10 +147,11 @@ def CreateAcount():
             "Phrase": hintPhrase,
             "Time": dt.now()
         })  #CreateAcc,Add data to database
-    UserId = SQLComand("""SELECT UserID
+    UserId = SQLComand(
+        """SELECT UserID
                        FROM Accounts
                        WHERE Username = :Username""",
-                       {"Username": username})[0][0]  #User ID
+        {"Username": username})[0][0]  #User ID
     print("Account Created")
     print("Logged In")
     return UserId
@@ -162,18 +166,20 @@ def LogIn():
         if username == "x":
             pass  #Redirect to Report Form
         else:
-            numOfUsers = SQLComand("""SELECT COUNT(*)
+            numOfUsers = SQLComand(
+                """SELECT COUNT(*)
                FROM Accounts
-               WHERE Username = :username""", {"username":username})[0][0]
+               WHERE Username = :username""", {"username": username})[0][0]
             if numOfUsers != 1:
                 print("Username doesn't exist")
                 print("Enter 'x' if you've forgotton your username")
             else:
                 validUsername = True
-    record = SQLComand("""SELECT *
+    record = SQLComand(
+        """SELECT *
        FROM Accounts
-       WHERE Username = :username""", {"username":username})[0]
-    phrase = record[4] #Return from Transaction
+       WHERE Username = :username""", {"username": username})[0]
+    phrase = record[4]  #Return from Transaction
     checkedPin = record[3]  #Return from Transaction
     userID = record[0]  #Return from Transaction
     name = record[1]  #Return from Transaction
@@ -188,9 +194,13 @@ def LogIn():
                 print("Enter 'x' if you've forgotton your password")
             else:
                 validPassword = True
-    SQLComand("""UPDATE Accounts
+    SQLComand(
+        """UPDATE Accounts
               SET LastLogin = :Time
-              WHERE UserID = :ID""", {"Time":dt.now(), "ID":userID})
+              WHERE UserID = :ID""", {
+            "Time": dt.now(),
+            "ID": userID
+        })
     print("Welcome " + name)
     return userID
 

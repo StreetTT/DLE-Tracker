@@ -1,17 +1,25 @@
 {
   "files": {
+    "DLE.db": [
+      {
+        "id": "7c7f101f-b8a2-4aef-b6d3-77d6ac52b9ef",
+        "line": 10,
+        "version": 1,
+        "index": 8193
+      }
+    ],
     "main.py": [
       {
         "id": "9b27c224-110b-4be4-becb-68e8f4688b59",
         "line": 150,
-        "version": 3090,
+        "version": 3322,
         "index": 3785
       },
       {
         "id": "a8b6ceb1-4eab-4213-aaba-9b9f49ea866f",
         "line": 176,
-        "version": 3165,
-        "index": 4588
+        "version": 3322,
+        "index": 4591
       }
     ]
   }
