@@ -48,11 +48,9 @@ class Dle():
     def setDate(self, d):
         self.Date = d
 
-
 def NewSection():
     print("---")
     sleep(1.2)
-
 
 def SQLComand(comannd, variables=None):
     conn = sql.connect("DLE.db")
@@ -78,7 +76,6 @@ def Setup():
       Pin TEXT NOT NULL,
       Phrase TEXT NOT NULL,
       LastLogin TEXT)""")
-
 
 def OpeningMenu():  #The Main Menu
     opt = 0
@@ -150,8 +147,7 @@ def CreateAcount():
     UserId = SQLComand("""SELECT UserID
                        FROM Accounts
                        WHERE Username = :Username""",
-                       {"Username": username})  #User ID
-    UserId = UserId[0][0]
+                       {"Username": username})[0][0]  #User ID
     print("Account Created")
     print("Logged In")
     return UserId
@@ -166,22 +162,21 @@ def LogIn():
         if username == "x":
             pass  #Redirect to Report Form
         else:
-            #"""SELECT COUNT(*)
-            #   FROM {tablename}
-            #   WHERE Username = :username""", {"username":username}
-            numOfUsers = 1  #Return from Transaction
+            numOfUsers = SQLComand("""SELECT COUNT(*)
+               FROM Accounts
+               WHERE Username = :username""", {"username":username})[0][0]
             if numOfUsers != 1:
                 print("Username doesn't exist")
                 print("Enter 'x' if you've forgotton your username")
             else:
                 validUsername = True
-    #"""SELECT *
-    #   FROM {tablename}
-    #   WHERE Username = :username""", {"username":username}
-    phrase = ""  #Return from Transaction
-    checkedPin = 0  #Return from Transaction
-    userID = None  #Return from Transaction
-    name = "Dani"  #Return from Transaction
+    record = SQLComand("""SELECT *
+       FROM Accounts
+       WHERE Username = :username""", {"username":username})[0]
+    phrase = record[4] #Return from Transaction
+    checkedPin = record[3]  #Return from Transaction
+    userID = record[0]  #Return from Transaction
+    name = record[1]  #Return from Transaction
     while validPassword == False:
         inputPin = input("Pin:  ")
         sleep(1.2)
@@ -193,6 +188,9 @@ def LogIn():
                 print("Enter 'x' if you've forgotton your password")
             else:
                 validPassword = True
+    SQLComand("""UPDATE Accounts
+              SET LastLogin = :Time
+              WHERE UserID = :ID""", {"Time":dt.now(), "ID":userID})
     print("Welcome " + name)
     return userID
 
