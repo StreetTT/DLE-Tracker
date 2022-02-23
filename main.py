@@ -1,3 +1,4 @@
+from ast import While
 from datetime import datetime as dt
 from time import sleep
 from Tracker import SQLComand,innit
@@ -141,8 +142,9 @@ def LogIn():
 def AddDleData(User):
     if User == None:
         print("You must be logged in")
-    else:
-        dle = FileComand("PasteHere.txt")
+    else:#Turn -dle message into an array
+        input('Press enter once the -dle coppied message has been pasted into "PasteHere.txt": ')
+        dle = FileComand("PasteHere.txt") 
         dle = dle.split("\n")
         dle[0] = dle[0].split(" ")
         dle.pop(1)
@@ -152,25 +154,35 @@ def AddDleData(User):
             dle[0][2] = 6
         else:
             guessed = True
-        if dle[0][0] == "Wordle":
-            SQLComand(
-            """INSERT INTO WordleData(WordleID,UserID,Guessed,Guesses,Row1)
-                  VALUES (:WordleID,:UserID,:Guessed,:Guesses,:Row1)""", {
-                "WordleID": int(dle[0][1]),
-                "UserID": User,
-                "Guessed": guessed,
-                "Guesses": dle[0][2],
-                "Row1": dle[1]
-            })
-            for i in range((int(dle[0][2]) - 1)):
-                try:
-                    command = """UPDATE Accounts
-                              SET Row<> = :row
-                              WHERE WordleID = :WordleID AND UserID = :UserID"""
-                    command = command.replace("<>",str(i+2))
-                    SQLComand(command, {"WordleID": dle[0][1],"UserID": User, "row": dle[i+2]})#THIS DOESNT WORK. SLEEP ON IT
-                except:
-                    print("e")
+        while len(dle) != 7:
+            dle.append("X")
+        if dle[0][0] == "Wordle":#Add Wordle into table
+            for loop in range (len(dle) - 1):#Standerdise what is saved
+                dle[loop+1] = dle[loop+1].replace("â¬›","B")
+                dle[loop+1] = dle[loop+1].replace("ðŸŸ¨","Y")
+                dle[loop+1] = dle[loop+1].replace("ðŸŸ©","G")
+                dle[loop+1] = dle[loop+1].replace("⬛","B")
+                dle[loop+1] = dle[loop+1].replace("🟨¨","Y")
+                dle[loop+1] = dle[loop+1].replace("🟩","G")
+            try:
+                SQLComand(
+                """INSERT INTO WordleData(WordleID,UserID,Guessed,Guesses,Row1,Row2,Row3,Row4,Row5,Row6)
+                    VALUES (:WordleID,:UserID,:Guessed,:Guesses,:Row1,:Row2,:Row3,:Row4,:Row5,:Row6)""", {
+                    "WordleID": int(dle[0][1]),
+                    "UserID": User,
+                    "Guessed": guessed,
+                    "Guesses": dle[0][2],
+                    "Row1": dle[1],
+                    "Row2": dle[2],
+                    "Row3": dle[3],
+                    "Row4": dle[4],
+                    "Row5": dle[5],
+                    "Row6": dle[6]
+                }) 
+                print("Data Added")
+            except:
+                print("There is already Data for that wordle.")
+                #Overwrite past save?
 
 OpeningSelection = -1
 LoggedInUserID = None
