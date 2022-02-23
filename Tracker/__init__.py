@@ -1,5 +1,6 @@
 import sqlite3 as sql
 
+
 def SQLComand(comannd, variables=None):
     conn = sql.connect("DLE.db")
     c = conn.cursor()

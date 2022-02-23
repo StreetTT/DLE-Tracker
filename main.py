@@ -1,4 +1,3 @@
-from ast import While
 from datetime import datetime as dt
 from time import sleep
 from Tracker import SQLComand,innit
@@ -33,7 +32,6 @@ def OpeningMenu():  #The Main Menu
             print("Please enter an interger.")
     NewSection()
     return opt
-
 
 def CreateAcount():
     pin1 = ""
@@ -90,7 +88,6 @@ def CreateAcount():
     print("Logged In")
     return UserId
 
-
 def LogIn():
     validUsername = False
     validPassword = False
@@ -137,7 +134,6 @@ def LogIn():
         })
     print("Welcome " + name)
     return userID
-
 
 def AddDleData(User):
     if User == None:
