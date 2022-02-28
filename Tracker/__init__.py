@@ -38,8 +38,8 @@ def innit():
         	SQLComand("""INSERT INTO WordleWords
                        Values (:id,:word)""",{"id":i, "word":list[i]})
     SQLComand("""CREATE TABLE IF NOT EXISTS WordleData (
-              WordleID INTEGER NOT NULL UNIQUE,
-              UserID INTEGER NOT NULL UNIQUE,
+              WordleID INTEGER NOT NULL,
+              UserID INTEGER NOT NULL,
               Guessed BOOLEAN NOT NULL,
               Guesses INTEGER,
               Row1 TEXT NOT NULL,

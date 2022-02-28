@@ -13,7 +13,21 @@
         - ranks everyone whos done the dle by guess 
         - if you guessed in 1, first....
 - Log out
+Wordle 248 4/6
 
+⬛⬛⬛⬛🟨
+🟨🟨🟨⬛🟨
+🟩🟩🟨🟨⬛
+🟩🟩🟩🟩🟩
+
+Wordle 249 X/6
+
+⬛⬛⬛⬛🟨
+⬛⬛⬛⬛🟩
+⬛🟨🟨🟨⬛
+⬛🟨⬛🟨⬛
+⬛⬛⬛⬛⬛
+⬛⬛⬛⬛⬛
 
 eventualy, 
 - accepsts request online from a website

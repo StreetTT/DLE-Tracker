@@ -180,6 +180,28 @@ def AddDleData(User):
                 print("There is already Data for that wordle.")
                 #Overwrite past save?
 
+def ViewData(User):
+    if User == None:
+        print("You must be logged in")
+    else:
+        GamesPlayed = SQLComand(
+                """SELECT Guessed
+               FROM WordleData
+               WHERE UserID = :ID""", {"ID": User})[0]
+        GamesWon = GamesPlayed.count(1) 
+        GamesPlayed = len(GamesPlayed)
+        UserInfo = SQLComand(
+                """SELECT FName,Username
+               FROM Accounts
+               WHERE UserID = :ID""", {"ID": User})[0] 
+        print((UserInfo[0].title()) + " | " + UserInfo[1])
+        print("Played : " + str(GamesPlayed))
+        print("Win% : " + str(round(((GamesWon/GamesPlayed)*100),2)) + "%")
+        #Current Streak
+        #Max Streak
+        #Distribution
+
+
 OpeningSelection = -1
 LoggedInUserID = None
 print("***Welcome to Bow's DLE Tracker***")
@@ -197,7 +219,7 @@ while OpeningSelection != 6:
     elif OpeningSelection == 3:
         AddDleData(LoggedInUserID)  #Add Dle Data
     elif OpeningSelection == 4:
-        pass  #Veiw Data
+        ViewData(LoggedInUserID)  #Veiw Data
     elif OpeningSelection == 5:
         pass  #Sign OUt
     if OpeningSelection != 6:
